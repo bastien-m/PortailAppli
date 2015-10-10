@@ -1,0 +1,10 @@
+{
+  "development" : {
+    "port": 3000,
+    "dburl": "mongodb://localhost/portailWeb"
+  },
+  "prod": {
+    "port": 3001,
+    "dburl": "mongodb://localhost/portailWeb"
+  }
+}
