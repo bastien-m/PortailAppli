@@ -12,33 +12,25 @@ module.exports = function(app) {
 
 	//methods
 	//retrieve a user by his login and password, this method is only used by passport
-	//in order to authenticate user
-	UserModel.login = function(login, password) {
-		app.winston.info('login(login, password) %s %s', login, password);
-		return new Promise(function(resolve, reject) {
-			UserModel.find({login: login, password: password}, function(err, users) {
-				if (err) {
-					app.winston.info('login : %s , password: %s', login, password);
-					app.winston.log(err);
-					reject('Une erreur est survenue lors de la requête');
+	//in order to authenticate user (cant find a way to work with passport + promise,
+	//so i used callback instead of promise)
+	UserModel.loginAuth = function(login, password, callback) {
+		UserModel.find({login: login, password: password}, function(err, users) {
+			if (err) {
+				callback(err);
+			}
+			else {
+				if (users.length == 0) {
+					callback('not found');
+				}
+				else if (users.length > 1) {
+					callback('to much user');
 				}
 				else {
-					if (users.length > 1) {
-						app.winston.info('login : %s , password: %s', login, password);
-						reject('Plusieurs utilisateurs trouvés, vérifier en base de données la liste des utilisateurs et supprimer les duoblons');
-					}
-					else if (users.length == 1){
-						console.log('found');
-						resolve(users[0]);
-					}
-					else {
-						app.winston.info('no user found');
-						//no user found, we resolve but with an empty array
-						resolve([]);
-					}
+					callback(null, users[0]);
 				}
-			});
-		});
+			}
+		})
 	}
 
 	return UserModel;

@@ -3,31 +3,17 @@ var passport = require('passport')
 
 module.exports = function(app) {
 
+
   passport.use(new BasicStrategy(
     function(username, password, done) {
-      (function() {
-        app.Models.UserModel.login(username, password)
-        .then(function(user) {
-          app.winston.log('user found');
-          app.winston.log(user);
-          if (user.length == 1) {
-            app.winston.log('found');
-            return done(null, user);
-          }
-          else {
-            app.winston.log('not found');
-            return done(null, false, { message: 'Aucun utilisateur trouvé'});
-          }
-        }, function(err) {
-          app.winston.log(err);
-          app.winston.log('something went wrong');
-          return done(null, false, { message: err});
-        })();
+      app.Models.UserModel.loginAuth(username, password, function(err, user) {
+        if (err) {
+          return done(err);
+        }
+        else {
+          return done(null, user);
+        }
       });
-      console.log('begin auth');
-      //retrieve a promise with user or error
-
-      console.log('end auth');
     }));
 
   //bind passport to express
