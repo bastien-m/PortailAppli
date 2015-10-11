@@ -28,6 +28,7 @@
     "morgan": "^1.6.1",
     "passport": "^0.3.0",
     "passport-http": "^0.3.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "winston": "^1.1.0"
   }
 }

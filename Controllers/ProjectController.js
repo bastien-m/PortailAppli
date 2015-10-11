@@ -3,7 +3,7 @@ module.exports = function(app) {
   return {
 
     get: function(req, res) {
-      console.log(req.user);
+      app.winston.log(req.user);
       res.json({msg: 'get project'});
     },
     create: function(req, res) {
