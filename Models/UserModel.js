@@ -17,14 +17,15 @@ module.exports = function(app) {
 	UserModel.loginAuth = function(login, password, callback) {
 		UserModel.find({login: login, password: password}, function(err, users) {
 			if (err) {
+				app.winston.log(err);
 				callback(err);
 			}
 			else {
 				if (users.length == 0) {
-					callback('not found');
+					callback(null, false);
 				}
 				else if (users.length > 1) {
-					callback('to much user');
+					callback(null, false);
 				}
 				else {
 					callback(null, users[0]);

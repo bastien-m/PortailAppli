@@ -1,0 +1,24 @@
+{
+  "name": "webapp-portail",
+  "version": "0.0.1",
+  "homepage": "https://github.com/bastien-m/PortailAppli",
+  "authors": [
+    "Bastien MERCIER <method1990@gmail.com>"
+  ],
+  "description": "the webapp for web portal",
+  "main": "index.html",
+  "license": "GPL-v3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-messages": "~1.4.7",
+    "materialize": "~0.97.1"
+  }
+}

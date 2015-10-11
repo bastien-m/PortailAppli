@@ -16,7 +16,7 @@ module.exports = function(app) {
 	var ProjectsSchema = new mongoose.Schema({
 		name 		: {type: String},
 		stack 	: [{type: String}],
-		url 		: [{type: Object}],
+		url 		: [{type: mongoose.Schema.Types.Mixed}],
 		description : {type: String},
 		isDone	: {type: Boolean},
 		host		: {type: String}

@@ -8,6 +8,7 @@ module.exports = function(app) {
     function(username, password, done) {
       app.Models.UserModel.loginAuth(username, password, function(err, user) {
         if (err) {
+          app.winston.info('error login : %s, %s', username, password);
           return done(err);
         }
         else {
