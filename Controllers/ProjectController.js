@@ -5,7 +5,6 @@ module.exports = function(app) {
     get: function(req, res) {
       //determine whether we want a specific project or a list of all the project
       if (typeof req.params.id !== 'undefined') {
-        console.log(req.params.id);
         app.Models.ProjectModel.findById(req.params.id, function(err, project) {
           if (err) {
             app.winston.error('an error occured while searching for a project %s', req.params.id);
@@ -31,6 +30,7 @@ module.exports = function(app) {
       }
     },
     create: function(req, res) {
+
       if (typeof req.body.name !== 'undefined'
         && typeof req.body.url !== 'undefined'
         && typeof req.body.description !== 'undefined') {
@@ -70,8 +70,6 @@ module.exports = function(app) {
           host: req.body.host || '',
           name: req.body.name
         }, {}, function(err, result) {
-          console.log(err);
-          console.log(result);
           if (err) {
             res.json({err: 'Une erreur est survenue lors de la modification du projet'});
           }

@@ -22,10 +22,10 @@ module.exports = function(app) {
 			}
 			else {
 				if (users.length == 0) {
-					callback(null, false);
+					callback('Aucun utilisateur trouvé', null);
 				}
 				else if (users.length > 1) {
-					callback(null, false);
+					callback('Erreur serveur', null);
 				}
 				else {
 					callback(null, users[0]);

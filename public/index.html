@@ -11,16 +11,33 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="bower_components/materialize/dist/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/addonMaterialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="bower_components/angular-flash-alert/dist/angular-flash.css" />
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
+  <nav class="light-blue lighten-1" role="navigation" ng-controller="LoginController">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Portail sites SPB</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#login">Se connecter</a></li>
+        <li ng-show="base64Authentication !== ''">
+          <a href="#" ng-click="UserService.logout()">Se déconnecter</a>
+        </li>
+        <li ng-show="base64Authentication !== ''">
+          <a href="#project/create">Ajouter un projet</a>
+        </li>
+        <li ng-show="base64Authentication === ''">
+          <a href="#login">Se connecter</a>
+        </li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="#login">Se connecter</a></li>
+        <li ng-show="base64Authentication === ''">
+          <a href="#" ng-click="UserService.logout()">Se connecter</a>
+        </li>
+        <li ng-show="base64Authentication !== ''">
+          <a href="#project/create">Ajouter un projet</a>
+        </li>
+        <li ng-show="base64Authentication !== ''">
+          <a href="#login">Se déconnecter</a>
+        </li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
@@ -39,11 +56,13 @@
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+  <script src="bower_components/angular-flash-alert/dist/angular-flash.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services/AppService.js"></script>
-  <script src="js/controllers/AppListController.js"></script>
-  <script src="js/controllers/AppDetailController.js"></script>
+  <script src="js/services/UserService.js"></script>
+  <script src="js/controllers/ProjectController.js"></script>
   <script src="js/controllers/LoginController.js"></script>
+
 
   </body>
 </html>

@@ -1,0 +1,28 @@
+<br><br>
+<div flash-message="5000" ></div> 
+<h1 class="header center light-blue-text">Pour pouvoir ajouter un projet, vous devez avoir un compte développeur</h1>
+<div class="row center">
+	<h5 class="header col s12 light">Entrez votre login mot de passe, si besoin demander à ce qu'on vous en créé un.</h5>
+</div>
+
+<div class="row">
+	<form name="loginForm" ng-submit="UserService.login(form.login, form.password)" class="col s6 offset-s3" novalidate>
+		<div class="row">
+			<div class="input-field">
+				<i class="material-icons prefix">perm_identity</i>
+				<input id="login" ng-model="form.login" type="text" class="validate" required>
+				<label for="login">Login</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field">
+				<i class="material-icons prefix">visibility</i>
+				<input id="password" ng-model="form.password" type="password" class="validate" required>
+				<label for="password">Mot de passe</label>
+			</div>
+		</div>
+		<div class="row center">
+			<button type="submit" ng-disabled="loginForm.$invalid" class="btn-large waves-effect waves-light light-blue darken-2">Connexion</button>
+		</div>
+	</form>
+</div>

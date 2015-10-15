@@ -1,11 +1,14 @@
 module.exports = function(app) {
   //allow CORS
   app.use(function(req, res, next) {
-    console.log('use custom middlewar');
-    res.header("Access-Controll-Allow-Origin", "*");
-    res.header("Access-Controll-Allow-Header", "X-Requested-With");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
   });
+
+
+  app.route('/user(/:id)?')
+    .get(app.Controllers.UserController.get);
 
   app.route('/project(/:id)?')
     .get(app.Controllers.ProjectController.get)

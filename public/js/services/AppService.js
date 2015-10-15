@@ -5,8 +5,8 @@
 */
 
 angular.module('PortalApp')
-  .factory('AppService', ['$http', '$q', 'prefixUrl', 'env', function($http, $q, prefixUrl, env) {
-    var uri = prefixUrl[env] + 'product';
+  .factory('AppService', ['$http', '$q', 'prefixUrl', 'env', 'UserService', function($http, $q, prefixUrl, env, UserService) {
+    var uri = prefixUrl[env] + 'project';
     var httpError = 'Une erreur est survenue veuillez ressayer plus tard';
 
     return {
@@ -17,14 +17,16 @@ angular.module('PortalApp')
           id = '';
         }
 
-        $http.get(uri + '/' + id).success(function(response) {
+        $http.get(uri + '/' + id).then(function(response) {
           if (response.status === 200) {
-            deferred.resolve(response.data);
+            deferred.resolve(response.data.projects);
           }
           else {
             deferred.reject(httpError);
           }
 
+        }, function(err) {
+          deferred.reject(err);
         });
         return deferred.promise;
       },
@@ -32,15 +34,28 @@ angular.module('PortalApp')
       create: function(appObject) {
         var deferred = $q.defer();
         if (angular.isDefined(appObject)) {
+          //set header for basic auth
+          $http.defaults.headers.common['Authorization'] = 'Basic ' + UserService.base64Authentication;
           $http.post(uri, appObject)
           .then(function(response) {
+            console.log(response);
             if (response.status === 200) {
-              deferred.resolve(response.data.msg);
+              console.log('status ok');
+              if (response.data.err === null) {
+                console.log(response.data);
+                deferred.resolve(response.data.msg);
+              }
+              else {
+                console.log('reject err server');
+                deferred.reject(response.err);
+              }
             }
             else {
+              console.log('reject err status http');
               deferred.reject(httpError);
             }
           }, function(err) {
+            console.log('reject http error');
             deferred.reject(err);
           });
         }

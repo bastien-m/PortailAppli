@@ -1,4 +1,4 @@
-angular.module('PortalApp', ['ngRoute'])
+angular.module('PortalApp', ['ngRoute', 'flash'])
   .constant('prefixUrl', {
     'test': 'http://localhost:3000/',
     'prod': 'http://localhost:3000/'
@@ -10,13 +10,21 @@ angular.module('PortalApp', ['ngRoute'])
       templateUrl: 'views/login.html',
       controller: 'LoginController'
     })
-    .when('/appDetail', {
-      templateUrl: 'views/appDetail.html',
-      controller: 'AppDetailController'
+    .when('/project/list', {
+      templateUrl: 'views/project/list.html',
+      controller: 'ProjectController'
+    })
+    .when('/project/detail', {
+      templateUrl: 'views/project/detail.html',
+      controller: 'ProjectController'
+    })
+    .when('/project/create', {
+      templateUrl: 'views/project/create.html',
+      controller: 'ProjectController'
     })
     .otherwise({
-      templateUrl: 'views/home.html',
-      controller: 'AppListController'
+      templateUrl: 'views/project/list.html',
+      controller: 'ProjectController'
     });
 
   }])
