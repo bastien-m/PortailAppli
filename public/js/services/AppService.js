@@ -8,8 +8,15 @@ angular.module('PortalApp')
   .factory('AppService', ['$http', '$q', 'prefixUrl', 'env', 'UserService', function($http, $q, prefixUrl, env, UserService) {
     var uri = prefixUrl[env] + 'project';
     var httpError = 'Une erreur est survenue veuillez ressayer plus tard';
+    var selectedApp = null;
 
     return {
+      setSelectedApp : function(app) {
+        this.selectedApp = app;
+      },
+      getSelectedApp : function() {
+        return this.selectedApp;
+      },
 
       get: function(id) {
         var deferred = $q.defer();
@@ -38,24 +45,18 @@ angular.module('PortalApp')
           $http.defaults.headers.common['Authorization'] = 'Basic ' + UserService.base64Authentication;
           $http.post(uri, appObject)
           .then(function(response) {
-            console.log(response);
             if (response.status === 200) {
-              console.log('status ok');
               if (response.data.err === null) {
-                console.log(response.data);
                 deferred.resolve(response.data.msg);
               }
               else {
-                console.log('reject err server');
                 deferred.reject(response.err);
               }
             }
             else {
-              console.log('reject err status http');
               deferred.reject(httpError);
             }
           }, function(err) {
-            console.log('reject http error');
             deferred.reject(err);
           });
         }

@@ -1,0 +1,81 @@
+<br><br>
+<h1 class="header center light-blue-text">Modifier un projet</h1>
+
+<div class="row">
+	<form name="updateForm" ng-submit="update()" class="col s8 offset-s2" novalidate>
+		<div class="row">
+			<div class="input-field">
+				<input id="name" ng-model="project.name" type="text" class="validate" required>
+				<label for="name">Nom du projet*</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field">
+				<input id="description" ng-model="project.description" type="text" class="validate" required>
+				<label for="description">Description</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s2">
+				<label for="isDone">En cours de dev ?</label>
+				<div class="switch">
+			    <label>
+			      Off
+			      <input ng-model="project.isDev" type="checkbox">
+			      <span class="lever"></span>
+			      On
+			    </label>
+				</div>
+			</div>
+			<div class="col s10">
+				<div class="input-field">
+					<label class="col s2">Technologies</label>
+					<div class="col s2 offset-s2">
+					 <input class="with-gap" value="js" id="js" type="radio" ng-model="project.stack"  />
+					 <label for="js">JS</label>
+				 	</div>
+					<div class="col s2">
+						<input class="with-gap" value="java" id="java" type="radio" ng-model="project.stack"  />
+						<label for="java">Java</label>
+					</div>
+					<div class="col s2">
+						<input class="with-gap" value="c#" id="cSharp" type="radio" ng-model="project.stack"  />
+						<label for="cSharp">C#</label>
+					</div>
+					<div class="col s2">
+						<input class="with-gap" value="other" id="other" type="radio" ng-model="project.stack"  />
+						<label for="other">Autre</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field">
+				<input id="host" ng-model="projet.host" type="text" class="validate">
+				<label for="host">Serveur de déploiement</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field">
+				<input id="urlTest" ng-model="projet.urlTest" type="text" class="validate" required>
+				<label for="urlTest">Url test</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field">
+				<input id="urlPreprod" ng-model="projet.urlPreprod" type="text" class="validate">
+				<label for="urlPreprod">Url préproduction</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field">
+				<input id="urlProd" ng-model="projet.urlProd" type="text" class="validate">
+				<label for="urlProd">Url production</label>
+			</div>
+		</div>
+
+		<div class="row center">
+			<button type="submit" ng-disabled="updateForm.$invalid" class="btn-large waves-effect waves-light light-blue darken-2">Valider</button>
+		</div>
+	</form>
+</div>

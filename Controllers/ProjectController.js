@@ -38,16 +38,18 @@ module.exports = function(app) {
         if (typeof req.body.stack !== 'undefined' && req.body.stack.constructor !== Array) {
           req.body.stack = [req.body.stack];
         }
-        new app.Models.ProjectModel({
+        var newProjectToSave = {
           name: req.body.name,
           stack: req.body.stack || [],
           url: req.body.url,
           description: req.body.description || 'Aucune description fournie',
           isDone: req.body.isDone || false,
           host: req.body.host || 'Aucun serveur indiqué'
-        }).save(function(err) {
+        };
+        new app.Models.ProjectModel(newProjectToSave).save(function(err) {
           if (err) {
             app.winston.error('An error occured while persisting data for project');
+            app.winston.error(newProjectToSave);
             app.winston.error(err);
             res.json({err: 'Une erreur est survenue lors de la création du projet'});
           }

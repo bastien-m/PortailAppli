@@ -1,0 +1,30 @@
+<br><br>
+<h1 class="header center light-blue-text">{{project.name}}</h1>
+
+<div class="row">
+  <div class="col s12">
+    <div class="card light-blue darken-2">
+      <div class="card-content white-text">
+        <span class="card-title">{{project.name}}
+          <span ng-show="project.isDone">(Terminée <i class="material-icons">done</i>)</span>
+          <span ng-hide="project.isDone">En cours</span>
+        </span>
+        <p>{{project.description}}</p>
+        <div class="row">
+          <div class="col m6 s12"><h4>Stack :</h4>
+            <span ng-repeat="tech in project.stack">{{tech}} <span ng-show="$index !== (project.stack.length - 1)">-</span> </span> 
+          </div>
+          <div class="col m6 s12"><h4>URL</h4>
+            <ul>
+              <li ng-repeat="url in project.url">{{url.name}}: {{url.link}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <a ng-href="#/project/update/{{project.id}}">Modifier</a>
+        <a ng-href="#/project/delete/{{project.id}}">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>

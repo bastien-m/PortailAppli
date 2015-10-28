@@ -10,12 +10,20 @@ angular.module('PortalApp', ['ngRoute', 'flash'])
       templateUrl: 'views/login.html',
       controller: 'LoginController'
     })
+    .when('/project/delete/:projectId', {
+      templateUrl: 'views/project/delete.html',
+      controller: 'ProjectController'
+    })
     .when('/project/list', {
       templateUrl: 'views/project/list.html',
       controller: 'ProjectController'
     })
-    .when('/project/detail', {
+    .when('/project/detail/:projectId', {
       templateUrl: 'views/project/detail.html',
+      controller: 'ProjectController'
+    })
+    .when('/project/update/:projectId', {
+      templateUrl: 'views/project/update.html',
       controller: 'ProjectController'
     })
     .when('/project/create', {
