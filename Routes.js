@@ -10,9 +10,13 @@ module.exports = function(app) {
   app.route('/user(/:id)?')
     .get(app.Controllers.UserController.get);
 
+
   app.route('/project(/:id)?')
     .get(app.Controllers.ProjectController.get)
     .post(app.Authenticate.isAuthenticated, app.Controllers.ProjectController.create)
     .put(app.Authenticate.isAuthenticated, app.Controllers.ProjectController.update)
     .delete(app.Authenticate.isAuthenticated, app.Controllers.ProjectController.delete);
+
+  app.get('/project/search/:query', app.Controllers.ProjectController.search);
+
 };

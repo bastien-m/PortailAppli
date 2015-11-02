@@ -1,4 +1,4 @@
-angular.module('PortalApp', ['ngRoute', 'flash'])
+angular.module('PortalApp', ['ngRoute', 'flash', 'ngAnimate'])
   .constant('prefixUrl', {
     'test': 'http://localhost:3000/',
     'prod': 'http://localhost:3000/'

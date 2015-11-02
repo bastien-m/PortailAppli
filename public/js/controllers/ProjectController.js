@@ -1,10 +1,14 @@
 angular.module('PortalApp')
-  .controller('ProjectController', ['$scope', 'Flash', '$location', '$routeParams', 'AppService', 'UserService',
-   function($scope, Flash, $location, $routeParams, AppService, UserService) {
+  .controller('ProjectController', ['$scope', 'Flash', '$rootScope', '$location', '$routeParams', 'AppService', 'UserService',
+   function($scope, Flash, $rootScope, $location, $routeParams, AppService, UserService) {
 
      if (AppService.getSelectedApp()) {
        $scope.project = AppService.getSelectedApp();
      }
+
+     $scope.$on('projectsFound', function(event, projects) {
+       $scope.appList = projects;
+     });
 
      var isAuthenticated = function() {
        if (typeof UserService.base64Authentication === 'undefined' || UserService.base64Authentication === '') {
@@ -31,6 +35,7 @@ angular.module('PortalApp')
          $location.path('/login');
        }
        else {
+         $rootScope.$broadcast('updateSearchable', false);
          loadProject($routeParams.projectId);
        }
      }
@@ -38,6 +43,9 @@ angular.module('PortalApp')
      if ($location.path() === '/project/delete') {
        if (!isAuthenticated()) {
          $location.path('/project/update/' + $rootParam.projectId);
+       }
+       else {
+         $rootScope.$broadcast('updateSearchable', false);
        }
      }
 

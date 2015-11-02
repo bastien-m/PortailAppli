@@ -16,6 +16,7 @@
 <body>
   <nav class="light-blue lighten-1" role="navigation" ng-controller="LoginController">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Portail sites SPB</a>
+
       <ul class="right hide-on-med-and-down">
         <li ng-show="base64Authentication !== ''">
           <a href="#" ng-click="UserService.logout()">Se déconnecter</a>
@@ -26,7 +27,12 @@
         <li ng-show="base64Authentication === ''">
           <a href="#login">Se connecter</a>
         </li>
+        <li>
+          <a ng-click="toggleSearchBox()" ng-show="searchable">Rechercher</a>
+        </li>
       </ul>
+
+
 
       <ul id="nav-mobile" class="side-nav">
         <li ng-show="base64Authentication === ''">
@@ -42,9 +48,21 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
+
+  <div class="row" ng-controller="SearchController">
+    <div class="col m6 offset-m3 s12" id="searchBoxContainer" ng-show="isSelected">
+      <form name="searchForm" novalidate="true">
+          <div class="row">
+            <div class="input-field">
+              <input type="text" ng-change="search(form.searchValue)" id="searchField" ng-model="form.searchValue" class="validate" required>
+              <label for="searchField">Recherche</label>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+
   <ng-view></ng-view>
-
-
 
   <ng-include src="'views/footer.html'"></ng-include>
 
@@ -54,6 +72,7 @@
   <script src="bower_components/materialize/dist/js/materialize.js"></script>
   <script src="js/addonMaterialize.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/angular-messages/angular-messages.min.js"></script>
   <script src="bower_components/angular-flash-alert/dist/angular-flash.js"></script>
@@ -61,6 +80,7 @@
   <script src="js/services/AppService.js"></script>
   <script src="js/services/UserService.js"></script>
   <script src="js/controllers/ProjectController.js"></script>
+  <script src="js/controllers/SearchController.js"></script>
   <script src="js/controllers/LoginController.js"></script>
 
 

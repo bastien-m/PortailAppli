@@ -83,7 +83,7 @@ angular.module('PortalApp')
       },
 
       delete: function(id) {
-        var deferred = $.defer();
+        var deferred = $q.defer();
 
         $http.delete(uri + '/' + id)
         .then(function(response) {
@@ -97,6 +97,22 @@ angular.module('PortalApp')
           deferred.reject(err);
         })
 
+        return deferred.promise;
+      },
+
+      search: function(query) {
+        var deferred = $q.defer();
+        $http.get(uri + '/search/' + query)
+        .then(function(response) {
+          if (response.status === 200) {
+            deferred.resolve(response.data.projects);
+          }
+          else {
+            deferred.reject(httpError);
+          }
+        }, function(err) {
+          deferred.reject(err);
+        });
         return deferred.promise;
       }
     };

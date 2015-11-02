@@ -7,7 +7,7 @@ module.exports = function(app) {
       if (typeof req.params.id !== 'undefined') {
         app.Models.ProjectModel.findById(req.params.id, function(err, project) {
           if (err) {
-            app.winston.error('an error occured while searching for a project %s', req.params.id);
+            app.winston.error('[ProjectController.get] an error occured while searching for a project %s', req.params.id);
             app.winston.error(err);
             res.json({err: 'Une erreur est survenue lors de la récupération du projet'});
           }
@@ -19,7 +19,7 @@ module.exports = function(app) {
       else {
         app.Models.ProjectModel.find({}, function(err, projects) {
           if (err) {
-            app.winston.error('an error occured while searching for projects');
+            app.winston.error('[ProjectController.get] an error occured while searching for projects');
             app.winston.error(err);
             res.json({err: 'Une erreur est survenue lors de la récupération des projets'});
           }
@@ -48,7 +48,7 @@ module.exports = function(app) {
         };
         new app.Models.ProjectModel(newProjectToSave).save(function(err) {
           if (err) {
-            app.winston.error('An error occured while persisting data for project');
+            app.winston.error('[ProjectController.create] An error occured while persisting data for project');
             app.winston.error(newProjectToSave);
             app.winston.error(err);
             res.json({err: 'Une erreur est survenue lors de la création du projet'});
@@ -87,12 +87,27 @@ module.exports = function(app) {
     delete: function(req, res) {
       app.Models.ProjectModel.findByIdAndRemove(req.params.id, function(err, result){
         if (err) {
-          aop.winston.error('An error occured while deleting a project %s', req.params.id);
+          aop.winston.error('[ProjectController.delete] An error occured while deleting a project %s', req.params.id);
           app.winston.error(err);
           res.json({err: 'Une erreur est survenue lors de la suppression'});
         }
         else {
           res.json({err: null, msg:'Suppression du projet réussie'});
+        }
+      });
+    },
+    //search a project using the value passed in
+    //show all the project containing the search value inside
+    //of their name and properties field (url, description,stack, host)
+    search: function(req, res) {
+      app.Models.ProjectModel.findByQuery(req.params.query, function(err, projects) {
+        if (err) {
+          app.winston.error('[ProjectController.search()] An error occured while fetching data from query');
+          app.winston.error(err);
+          res.json({err: 'Une erreur est survenue lors de l\'exécution de la requête'});
+        }
+        else {
+          res.json({err: null, projects: projects});
         }
       });
     }
