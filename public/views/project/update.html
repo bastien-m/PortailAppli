@@ -51,28 +51,17 @@
 		</div>
 		<div class="row">
 			<div class="input-field">
-				<input id="host" ng-model="projet.host" type="text" class="validate">
+				<input id="host" ng-model="project.host" type="text" class="validate">
 				<label for="host">Serveur de déploiement</label>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" ng-repeat="url in project.url">
 			<div class="input-field">
-				<input id="urlTest" ng-model="projet.urlTest" type="text" class="validate" required>
-				<label for="urlTest">Url test</label>
+				<input id="urlTest" ng-model="url.link" type="text" class="validate">
+				<label for="urlTest">Url {{url.name}}</label>
 			</div>
 		</div>
-		<div class="row">
-			<div class="input-field">
-				<input id="urlPreprod" ng-model="projet.urlPreprod" type="text" class="validate">
-				<label for="urlPreprod">Url préproduction</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-field">
-				<input id="urlProd" ng-model="projet.urlProd" type="text" class="validate">
-				<label for="urlProd">Url production</label>
-			</div>
-		</div>
+
 
 		<div class="row center">
 			<button type="submit" ng-disabled="updateForm.$invalid" class="btn-large waves-effect waves-light light-blue darken-2">Valider</button>

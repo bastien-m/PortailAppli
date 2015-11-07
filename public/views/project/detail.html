@@ -20,8 +20,12 @@
             </ul>
           </div>
         </div>
+        <div class="row">
+          <h4>Serveur de déploiement</h4>
+          {{project.host}}
+        </div>
       </div>
-      <div class="card-action">
+      <div class="card-action" ng-show="isAuthenticated()">
         <a ng-href="#/project/update/{{project._id}}">Modifier</a>
         <a ng-href="#/project/delete/{{project._id}}">Supprimer</a>
       </div>

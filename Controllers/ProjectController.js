@@ -54,7 +54,7 @@ module.exports = function(app) {
             res.json({err: 'Une erreur est survenue lors de la création du projet'});
           }
           else {
-            res.json({err: null, msg: 'Projet sauvegardé'});
+            res.json({err: null, msg: 'Projet créé avec succès'});
           }
         });
       }
@@ -64,7 +64,7 @@ module.exports = function(app) {
     },
     update: function(req, res) {
       if (typeof req.body.name !== 'undefined') {
-        app.models.ProjectModel.findByIdAndUpdate(req.params.id, {
+        app.Models.ProjectModel.findByIdAndUpdate(req.params.id, {
           description : req.body.description || '',
           url: req.body.url || {},
           stack: req.body.stack || {},
@@ -76,7 +76,7 @@ module.exports = function(app) {
             res.json({err: 'Une erreur est survenue lors de la modification du projet'});
           }
           else {
-            res.json({err: null, msg:'Projet mis à jour'});
+            res.json({err: null, msg:'Projet mis à jour avec succès'});
           }
         });
       }

@@ -1,9 +1,9 @@
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  methodOverride = require('method-override'),
   errorHandler = require('errorhandler'),
   winston = require('winston'),
+  cors = require('cors'),
   mongoose = require('mongoose'),
   config = require('./config.json')[app.get('env')];
 
@@ -12,6 +12,7 @@ app.winston = winston;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 //connection to mongodb
 mongoose.connect(config.dburl);

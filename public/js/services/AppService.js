@@ -66,9 +66,10 @@ angular.module('PortalApp')
         return deferred.promise;
       },
 
-      update: function(id, appObject) {
+      update: function(appObject) {
         var deferred = $q.defer();
-        $http.put(uri + '/' + id, appObject)
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + UserService.base64Authentication;
+        $http.put(uri + '/' + appObject._id, appObject)
         .then(function(response) {
           if (response.status === 200) {
             deferred.resolve(response.data.msg);
@@ -84,7 +85,7 @@ angular.module('PortalApp')
 
       delete: function(id) {
         var deferred = $q.defer();
-
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + UserService.base64Authentication;
         $http.delete(uri + '/' + id)
         .then(function(response) {
           if (response.status === 200) {

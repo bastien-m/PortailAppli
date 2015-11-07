@@ -36,13 +36,17 @@
 
       <ul id="nav-mobile" class="side-nav">
         <li ng-show="base64Authentication === ''">
-          <a href="#" ng-click="UserService.logout()">Se connecter</a>
+          <a href="#login">Se connecter</a>
         </li>
         <li ng-show="base64Authentication !== ''">
           <a href="#project/create">Ajouter un projet</a>
         </li>
         <li ng-show="base64Authentication !== ''">
-          <a href="#login">Se déconnecter</a>
+          <a href="#" ng-click="UserService.logout()">Se déconnecter</a>
+        </li>
+
+        <li>
+          <a ng-click="toggleSearchBox()" ng-show="searchable">Rechercher</a>
         </li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

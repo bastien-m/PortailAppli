@@ -18,31 +18,22 @@ angular.module('PortalApp')
        return true;
      }
 
-     var loadProject = function(projectId) {
-       AppService.get(projectId)
-       .then(function(project) {
-         $scope.project = project;
-       }, function(err) {
-         Flash.create('danger', err, 'custom-class');
-       })
-     }
-
      //If we try to access the update page
      //first check authentication, then load data for this
      //project
-     if ($location.path() === '/project/update') {
+     if ($location.path().search(/^\/project\/update/) > -1) {
        if (!isAuthenticated()) {
-         $location.path('/login');
+         $location.path('/project/detail/' + $routeParams.projectId);
        }
        else {
          $rootScope.$broadcast('updateSearchable', false);
-         loadProject($routeParams.projectId);
+         $scope.project = AppService.getSelectedApp();
        }
      }
 
      if ($location.path() === '/project/delete') {
        if (!isAuthenticated()) {
-         $location.path('/project/update/' + $rootParam.projectId);
+         $location.path('/project/detail/' + $routeParams.projectId);
        }
        else {
          $rootScope.$broadcast('updateSearchable', false);
@@ -66,6 +57,10 @@ angular.module('PortalApp')
       });
     }
 
+    $scope.isAuthenticated = function() {
+      return !(typeof UserService.base64Authentication === 'undefined' || UserService.base64Authentication === '');
+    }
+
     $scope.showDetails = function(project) {
       AppService.setSelectedApp(project);
       $location.path('/project/detail/' + project._id);
@@ -79,7 +74,7 @@ angular.module('PortalApp')
          {name: 'prod', link: self.form.urlProd}];
 
       AppService.create(self.form).then(function(msg) {
-        Flash.create('success', 'Projet créé avec succès', 'custom-class');
+        Flash.create('success', msg, 'custom-class');
         $location.path('/project/list');
       }, function(err) {
         self.errorMsg = err;
@@ -91,7 +86,7 @@ angular.module('PortalApp')
       if (isAuthenticated()) {
         AppService.update($scope.project)
         .then(function(msg) {
-          Flash.create('success', 'Projet mis à jour avec succès', 'custom-class');
+          Flash.create('success', msg , 'custom-class');
           $location.path('/project/list');
         }, function(err) {
           $scope.err = err;
@@ -101,14 +96,19 @@ angular.module('PortalApp')
 
     $scope.delete = function() {
       if (isAuthenticated()) {
-         AppService.delete($scope.project.id)
+         AppService.delete($scope.project._id)
         .then(function(msg) {
-          Flash.create('success', 'Projet supprimé avec succès', 'custom-class');
+          Flash.create('success', msg, 'custom-class');
           $location.path('/project/list');
         }, function(err) {
           $scope.err = err;
         });
       }
+    }
+
+    //cancel delete decision
+    $scope.back = function() {
+      $window.history.back();
     }
 
   }]);
